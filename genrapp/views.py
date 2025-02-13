@@ -265,7 +265,12 @@ def request_service(request):
     
     return render(request, 'Requestserviceform.html')
 
-
+def Enquiry_delete(request,id):
+    enquiry = Enquiry.objects.get(id = id)
+    print("the data:",enquiry)
+    if enquiry:
+        enquiry.delete()
+    return redirect('dashboard')
 
 
 

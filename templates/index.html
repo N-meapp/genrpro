@@ -474,16 +474,20 @@
     <!-- about end -->
 
     <!-- offer start -->
-    <div class="slider-container">
-      <h1>Our Offers</h1>
-      <!-- Slider List Items -->
+ 
 
+    <div class="slider-container">
+      <!-- SliderList Items -->
+      <h1>Our Offers</h1>
       <div class="slider-wrapper swiper-wrapper">
         {% for i in offer_data %}
+      
         <div class="slider-item swiper-slide">
           <img class="img-fluid w-75" src="{{ i.image.url }}" alt="" />
         </div>
+       
         {% endfor %}
+        
         <!-- <div class="slider-item swiper-slide">
             </div>
             <div class="slider-item swiper-slide">
@@ -493,6 +497,8 @@
             <div class="slider-item swiper-slide">
             </div> -->
       </div>
+
+      
       <!-- Slider Pagination -->
       <div class="slider-controls">
         <ul class="slider-pagination">
@@ -516,6 +522,7 @@
         </button>
       </div>
     </div>
+ 
 
     <!-- Our services start -->
     <div class="container-xxl py-5">

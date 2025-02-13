@@ -19,8 +19,8 @@ class Gallery(models.Model):
     category = models.CharField(max_length=20)
 
 class Offer(models.Model):
-    banner_title = models.CharField(max_length=125, blank=True)
-    banner_content = models.TextField()
+    banner_title = models.CharField(max_length=125, default="Our Offers")
+    banner_content = models.TextField(blank=True)
     image = models.ImageField(upload_to='offer')
 
 class Our_Works(models.Model):
