@@ -1,0 +1,1153 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+        <!-- CSS Files -->
+        <link rel="stylesheet" href="../static/css/admin.css">
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script src="../static/js/admin.js" defer></script>
+
+</head>
+<body class="admin-body">
+
+  <div class="container-fluid">
+    <div class="admin-first">
+      <div class="admin-group">
+        <div class="first-nav-section">
+          <div class="logo">
+            <!-- <h1>genr</h1> -->
+            <img src="../static/images/logo_genr.png" alt="" width="100">
+          </div>
+          <div class="table-head">
+            <button onclick="showOfferFunction('offersection')" class="nav-item" id="offersection-id">Offers</button>
+            <button onclick="showOfferFunction('gallerysection')" class="nav-item" id="gallerysection-id">Gallery</button>
+            <!-- <button onclick="showOfferFunction('work-section')" class="nav-item" id="work-section-id">Works</button> -->
+            <button onclick="showOfferFunction('Career-section')" class="nav-item" id="Career-section-id">Career</button>
+            <button onclick="showOfferFunction('enquiry-section')" class="nav-item" id="enquiry-section-id">Enquiry</button>
+            <button onclick="showOfferFunction('application-section')" class="nav-item" id="application-section-id">Job Applications</button>
+            <button onclick="showOfferFunction('contact-section')" class="nav-item" id="contact-section-id">Contact Form</button>
+            <button onclick="showOfferFunction('news-section')" class="nav-item" id="news-section-id">News</button>
+            <button onclick="showOfferFunction('count-section')" class="nav-item" id="count-section-id">Count</button>
+           <a href="logout"><button  class="nav-item" >Logout</button></a> 
+          </div>
+        </div>
+        <div class="table-content grow" id="offersection">
+          <div class="container mb-5 ">
+            <!-- Trigger Button -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
+              Add New
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Add Offer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="offerForm" action="{% url 'offeradd' %}" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="mb-3">
+                        <label for="bannertitle" class="form-label">Offer Title</label>
+                          <input type="text" class="form-control" id="bannertitle" name="bannertitle" >
+                      </div>
+                      <div class="mb-3">
+                        <label for="bannercontent" class="form-label">Offer Content</label>
+                        <textarea class="form-control" id="bannercontent" name="bannercontent" rows="3" ></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="image" class="form-label">Offer Image</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                      </div>
+                      
+                      <button type="submit" class="btn btn-primary w-100  mt-5 center">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>             
+
+          <div class="table-list" >
+            <table>
+              <thead>
+                <tr class="heading">
+                  <th>Offer Image</th>
+                  <th>Offer Title</th>
+                  <th>Offer Content</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in offerdata %}
+                <tr>
+                  <td><img src="{{data.image.url}}" width="80" alt="..."></td>
+                  <td>{{data.banner_title}}</td>
+                  <td>{{data.banner_content}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModaloffer" onclick="openUpdateModaloffer('{{ data.id }}','{{data.banner_title}}','{{data.banner_content}}','{{data.image}}')"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="/offer_delete/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- updating modal of offer -->
+
+          <div class="modal fade" id="updateModaloffer" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="updateModalLabel">Edit Offer</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="offerFormupdate" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label for="offertitle" class="form-label">Offer Title</label>
+                      <input type="text" class="form-control" id="offertitle" name="offertitle">
+                    </div>
+                    <div class="mb-3">
+                      <label for="offercontent" class="form-label">Offer Content</label>
+                      <input type="text" class="form-control" id="offercontent" name="offercontent">
+                    </div>
+                    <div class="mb-3">
+                      <label for="offerimage" class="form-label">Offer Image</label>
+                      <input type="file" class="form-control" id="offerimage" name="offerimage" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Update</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
+        <div class="table-content grow" id="gallerysection" style="display: none;"   >
+          <div class="container mb-5 ">
+            <!-- Trigger Button -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal2">
+              Add New
+            </button>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showgalleryFunction('showall')">
+              Show All
+            </button>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showgalleryFunction('gallerypowerenergy')">
+              Power & Energy
+            </button>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showgalleryFunction('galleryautomation')">
+              automation
+            </button>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showgalleryFunction('gallerycold')">
+              cold Storage
+            </button>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showgalleryFunction('gallerygenrsmart')">
+              Genr smart
+            </button>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showgalleryFunction('gallerygenerator')">
+              Generator
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="registerModal2" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Add Galley</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="galleryForm" action="{% url 'addgallery' %}" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="mb-3">
+                        <label for="galleryimage" class="form-label">Galley Image</label>
+                        <input type="file" class="form-control" id="galleryimage" name="galleryimage" accept="image/*" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="category" class="form-label">Galley Category</label>
+                        <select name="category" id="category" class="form-control">
+                            <option value="solar plants">Solar Plants</option>
+                            <option value="automation">automation</option>
+                            <option value="cold storage">cold storage</option>
+                            <option value="genr smart">genr smart</option>
+                            <option value="generator">Generator</option>
+                        </select>
+                      </div>
+                      <button type="submit" class="btn btn-primary w-100 mt-5">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-list gallery-area grow" id="showall">
+            <table >
+              <thead>
+                <tr class="heading">
+                  <th>Gallery Image</th> 
+                  <th>Gallery Category</th> 
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in gallery_images %}
+                <tr>
+                  <td><img src="{{data.gallery_image.url}}" width="80" alt="..."></td>
+                  <td>{{data.category}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal2" onclick="openUpdateModalgallery('{{ data.id }}','{{data.category}}','{{data.gallery_image}}')"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="/gallery_delete/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-list gallery-area grow" id="gallerypowerenergy" style="display: none;">
+            <table class=" " >
+              <thead>
+                <tr class="heading">
+                  <th>Gallery Image</th> 
+                  <th>Gallery Category</th> 
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in adminsolarplant %}
+                <tr>
+                  <td><img src="{{data.gallery_image.url}}" width="80" alt="..."></td>
+                  <td>{{data.category}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal2" onclick="openUpdateModalgallery('{{ data.id }}','{{data.category}}','{{data.gallery_image}}')"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="/gallery_delete/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-list grow gallery-area" id="galleryautomation" style="display: none;">
+            <table class="" >
+              <thead>
+                <tr class="heading">
+                  <th>Gallery Image</th> 
+                  <th>Gallery Category</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in galleryautomation %}
+                <tr>
+                  <td><img src="{{data.gallery_image.url}}" width="80" alt="..."></td>
+                  <td>{{data.category}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal2" onclick="openUpdateModalgallery('{{ data.id }}','{{data.category}}','{{data.gallery_image}}')"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="/gallery_delete/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-list grow gallery-area"  id="gallerygenrsmart" style="display: none;">
+            <table class="">
+              <thead>
+                <tr class="heading">
+                  <th>Gallery Image</th> 
+                  <th>Gallery Category</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in gallerygenrsmart %}
+                <tr>
+                  <td><img src="{{data.gallery_image.url}}" width="80" alt="..."></td>
+                  <td>{{data.category}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal2" onclick="openUpdateModalgallery('{{ data.id }}','{{data.category}}','{{data.gallery_image}}')"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="/gallery_delete/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="table-list grow gallery-area" id="gallerycold" style="display: none;">
+            <table class="">
+              <thead>
+                <tr class="heading">
+                  <th>Gallery Image</th> 
+                  <th>Gallery Category</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in gallerycoldstorage %}
+                <tr>
+                  <td><img src="{{data.gallery_image.url}}" width="80" alt="..."></td>
+                  <td>{{data.category}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal2" onclick="openUpdateModalgallery('{{ data.id }}','{{data.category}}','{{data.gallery_image}}')"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="/gallery_delete/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="table-list grow gallery-area" id="gallerygenerator" style="display: none;">
+            <table class="">
+              <thead>
+                <tr class="heading">
+                  <th>Gallery Image</th> 
+                  <th>Gallery Category</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in generatoradmin %}
+                <tr>
+                  <td><img src="{{data.gallery_image.url}}" width="80" alt="..."></td>
+                  <td>{{data.category}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal2" onclick="openUpdateModalgallery('{{ data.id }}','{{data.category}}','{{data.gallery_image}}')"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="/gallery_delete/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+
+          <!-- Update Modal -->
+          <div class="modal fade" id="updateModal2" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">Edit Gallery Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="updateGalleryForm" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="categoryupdate" class="form-label">Galley Category</label>
+                            <select name="categoryupdate" id="categoryupdate" class="form-control">
+                                <option value="solar plants">Solar Plants</option>
+                                <option value="automation">Automation</option>
+                                <option value="cold storage">Cold Storage</option>
+                                <option value="genr smart">Genr Smart</option>
+                                <option value="generator">Generator</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="galleryimageupdate" class="form-label">Gallery Image</label>
+                            <input type="file" class="form-control" id="galleryimageupdate" name="galleryimageupdate" accept="image/*">
+                            <!-- <img id="imagePreview" src="" alt="Current Image" style="display:none; width: 100px; margin-top: 10px;"> -->
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Update</button>
+                    </form>
+                    
+                    </div>
+                </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="table-content grow" id="enquiry-section" style="display: none;">
+            
+          <div class="table-list" >
+            <table>
+              <thead>
+                <tr class="heading">
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone_number </th>
+                  <th>Services</th>
+                  <th>Message</th>
+                  
+
+         
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in enquirydata %}
+                <tr>
+                  <td>{{data.name}}</td>
+                    <td>{{data.email}}</td>
+                    <td>{{data.phone_number}}</td>
+                    <td>{{data.services}}</td>
+                    <td>{{data.message}}</td>
+                    <td><a href="/Enquiry_delete/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+
+
+        <div class="table-content grow" id="Career-section" style="display: none;">
+          <div class="container mb-5 ">
+            <!-- Trigger Button -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModalcareer">
+              Add New
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="registerModalcareer" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Add Career</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="offerForm" action="{% url 'careeradd' %}" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="mb-3">
+                        <label for="jobtitle" class="form-label">Job Title</label>
+                          <input type="text" class="form-control" id="jobtitle" name="jobtitle" >
+                      </div>
+                      <div class="mb-3">
+                        <label for="jobcontent" class="form-label">Job Content</label>
+                        <textarea class="form-control" id="jobcontent" name="jobcontent" ></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" >
+                      </div>
+                      <div class="mb-3">
+                        <label for="phone_number" class="form-label">phone_number</label>
+                          <input type="text" class="form-control" id="phone_number" name="phone_number" >
+                      </div>
+                    
+                      <div class="mb-3">
+                        <label for="work_time" class="form-label">Work Time</label>
+                        <select name="work_time" id="work_time" class="form-control">
+                          <option value="Full Time">Full Time</option>
+                          <option value="Part Time">Part Time</option>
+                        </select>
+                      </div>
+                     
+                      
+                      <button type="submit" class="btn btn-primary w-100 mt-5">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>             
+
+          <div class="table-list" >
+            <table>
+              <thead>
+                <tr class="heading">
+                  <th>Job Title</th>
+                  <th>Job Description</th>
+                  <th>Work time</th>
+                  <th>Email</th>
+                  <th>Phone Number</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in careerdata %}
+                <tr>
+            
+                  <td>{{data.job_title}}</td>
+                  <td>{{data.job_description}}</td>
+                  <td>{{data.work_time}}</td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.phone_number}}</td>
+                 
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModalcareer" onclick="openUpdateModalcareer('{{ data.id }}','{{ data.job_title }}','{{ data.job_description }}','{{ data.work_time }}','{{ data.email }}','{{ data.phone_number }}')"><i class="bi bi-pencil-fill"></i></a></td>
+
+                  <td><a href="/delete_careersection/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <!-- updating modal of offer -->
+
+          <div class="modal fade" id="updateModalcareer" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="updateModalLabel">Edit career</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="careerFormupdate" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label for="jobtitle" class="form-label">Job Title</label>
+                      <input type="text" class="form-control" id="jobtitle" name="jobtitle">
+                    </div>
+                    <div class="mb-3">
+                      <label for="jobcontent" class="form-label">Job Description</label>
+                      <input type="text" class="form-control" id="jobcontent" name="jobcontent">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="worktime" class="form-label">Work Time</label>
+                      <select name="worktime" id="worktime" class="form-control">
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time">Part Time</option>
+                      </select>
+                    </div>
+                   
+                    <div class="mb-3">
+                      <label for="email" class="form-label">Email</label>
+                      <input type="text" class="form-control" id="email" name="email">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="phone" class="form-label">Phone Number</label>
+                      <input type="text" class="form-control" id="phone" name="phone">
+                    </div>
+                   
+                    <button type="submit" class="btn btn-primary w-100">Update</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+
+        <div class="table-content grow" id="application-section" style="display: none;">
+          <div class="table-list">
+              <table>
+                  <thead>
+                      <tr class="heading">
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Phone Number</th>
+                          <th>Job Position</th>
+                          <th>CV</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for job in jobs %}
+                      <tr>
+                          <td>{{ job.name }}</td>
+                          <td>{{ job.email }}</td>
+                          <td>{{ job.phone_number }}</td>
+                          <td>{{ job.job_position }}</td>
+                          <td><a href="{{ job.cv.url }}" target="_blank">Download</a></td>
+                          <td>
+                            <a href="{% url 'job_delete' job.id %}" class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete this job application?');">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                        
+                          <td>
+                              <!-- Edit Button -->
+                              <a href="#" data-bs-toggle="modal" data-bs-target="#updateModaljob" 
+                                  onclick="openUpdateModaljob('{{ job.id }}','{{ job.name }}','{{ job.email }}','{{ job.phone_number }}','{{ job.job_position }}','{{ job.cv.url }}')">
+                                  <i class="bi bi-pencil-fill"></i>
+                              </a>
+      
+                             
+      
+                              <!-- Hidden Form for Deletion -->
+                              <form id="delete-form-{{ job.id }}" method="POST" action="{% url 'job_delete' job.id %}" style="display: none;">
+                                  {% csrf_token %}
+                              </form>
+                          </td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                          <td colspan="6" class="text-center">No job applications found</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      
+
+
+
+
+      <div class="table-content grow" id="contact-section" style="display: none;">
+        <div class="table-list">
+            <table>
+                <thead>
+                    <tr class="heading">
+                        <th>name</th>
+                        <th>email</th>
+                        <th>mobile</th>
+                        <th>enquiry_type</th>
+                        <th>message</th>
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contact in contact %}
+                    <tr>
+                        <td>{{ contact.name }}</td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.mobile }}</td>
+                        <td>{{ contact.enquiry_type }}</td>
+                        <td>{{ contact.message }}</td>
+                        <td>
+                          <a href="{% url 'contact_delete' contact.id %}" class="btn btn-danger btn-sm"
+                             onclick="return confirm('Are you sure you want to delete this job application?');">
+                              <i class="bi bi-trash"></i>
+                          </a>
+                      </td>
+                        <td>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#updateModalcontact_form" 
+                                onclick="openUpdateModalcontact_form('{{ job.id }}','{{ contact.name }}','{{ contact.email }}','{{ contact.mobile }}','{{ contact.enquiry_type }}','{{ contact.message }}')">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No contact form details</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+      
+      <div class="table-content grow" id="count-section" style="display: none;">
+          <div class="table-list">
+              <table>
+                  <thead>
+                      <tr class="heading">
+                          <th>Happy Customers</th>
+                          <th>Projects Done</th>
+                          <th>Expert Workers</th>
+                          <th>Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for count in count %}
+                      <tr>
+                          <td>{{ count.happy_customers }}</td>
+                          <td>{{ count.projects_done }}</td>
+                          <td>{{ count.expert_workers }}</td>
+                          <td>
+                              <a href="#" data-bs-toggle="modal" data-bs-target="#updateModalcount" 
+                                  onclick="openUpdateModalcount('{{ count.id }}','{{ count.happy_customers }}','{{ count.projects_done }}','{{ count.expert_workers }}')">
+                                  <i class="bi bi-pencil-fill"></i>
+                              </a>
+                          </td>
+                      </tr>
+                      {% empty %}
+                      <tr>
+                          <td colspan="4" class="text-center">No count data available</td>
+                      </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+          </div>
+      </div>
+          {% comment %} update count modal {% endcomment %}
+
+          <div class="modal fade" id="updateModalcount" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">Edit Count</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="updatecountForm" action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="happy customers" class="form-label">Happy Customers</label>
+                            <input type="text" class="form-control" id="happy_customers" name="happy_customers" required>
+                        </div>
+                        <div class="mb-3">
+                          <label for="project done" class="form-label">Project Done</label>
+                          <input type="text" class="form-control" id="project_done" name="project_done" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="expert workers" class="form-label">Expert Workers</label>
+                        <input type="text" class="form-control" id="expert_workers" name="expert_workers" required>
+                    </div>
+                        <button type="submit" class="btn btn-primary w-100">Update</button>
+                    </form>
+                    
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-content grow" id="news-section" style="display: none;"   >
+          <div class="container mb-5 ">
+            <!-- Trigger Button -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newsaddModal">
+              Add New
+            </button>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="newsaddModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Add News</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="newsForm" action="{% url 'addnews' %}" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="mb-3">
+                        <label for="newsimage" class="form-label">News Title</label>
+                        <input type="text" class="form-control" id="newsname" name="newsname" accept="" required>
+                        
+                      </div>
+                      <div class="mb-3">
+                        <label for="newsimage" class="form-label">News Image</label>
+                        <input type="file" class="form-control" id="newsimage" name="newsimage" accept="image/*" required>
+                      </div>
+                     
+                      <div class="mb-3">
+                        <label for="newsimage" class="form-label">Descriptions</label>
+                        <textarea name="newsdesc" class="form-control" id="newsdesc" required style="height: 200px;"></textarea>
+                        
+                      </div>
+                      <div class="mb-3">
+                        <label for="newsimage" class="form-label">Posted Date</label>
+                        <input type="date" class="form-control" id="newsdate" name="newsdate" accept="image/*" required>
+                        
+                      </div>
+                      <button type="submit" class="btn btn-primary w-100 mt-5">Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="table-list" >
+            <table>
+              <thead>
+                <tr class="heading">
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Desccription</th>
+                  <th>Date</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in news %}
+                <tr>
+            
+                  <td><img src="{{data.image.url}}" alt="" style="width:100px;"></td>
+                  <td>{{data.name}}</td>
+                  <td>{{data.description}}</td>
+                  <td>{{data.date}}</td>
+                  
+                 
+                 
+                  <!-- <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModalcareer" onclick="openUpdateModalnews('{{ data.id }}','{{ data.name }}','{{ data.description }}','{{ data.date }}','{{ data.email }}')"><i class="bi bi-pencil-fill"></i></a></td> -->
+
+                  <td><a href="/delete_news/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+
+
+
+          
+
+        </div>
+
+
+        <div class="table-content grow" id="work-section"  style="display: none;">
+          <div class="container mb-5 ">
+            <!-- Trigger Button -->
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal3">
+              Add New
+            </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showworkFunction('showall')">
+              Show All
+            </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showworkFunction('powerenergy')">
+              Power & Energy
+            </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showworkFunction('automation')">
+              automation
+            </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showworkFunction('cold')">
+              cold Storage
+            </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="" onclick="showworkFunction('genrsmart')">
+              Genr smart
+            </button>
+
+    
+            <!-- Modal -->
+            <div class="modal fade" id="registerModal3" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="registerModalLabel">Add Work</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="galleryForm" action="{% url 'workadd' %}" method="POST" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="mb-3">
+                        <label for="worktitle" class="form-label">Work Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="workcategory" class="form-label">Work Category</label>
+                          <select name="browsers" id="browsers" class="form-control">
+                              <option value="Power & Energy">Power & Energy</option>
+                              <option value="Automation">Automation</option>
+                              <option value="Cold Storage">Cold Storage</option>
+                              <option value="Genr Smart">Genr Smart</option>
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="thumbnail_img" class="form-label">Work Image</label>
+                          <input type="file" class="form-control" id="thumbnail_img" name="thumbnail_img" accept="image/*">
+                      </div>
+                      <div class="mb-3">
+                          <label for="description" class="form-label">Work Description</label>
+                          <input type="text" class="form-control" id="description" name="description">
+                      </div>
+                      <div class="mb-3">
+                        <div id="existingImages">
+                      </div>
+                      <div class="mb-5">
+                        <label for="additional_images" class="form-label">Additional Images:</label>
+                        <input type="file" id="additional_images" class="form-control" name="additional_images" multiple>
+                      </div>
+                  
+                
+                      <button type="submit" class="btn btn-primary w-100">Update</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+
+
+
+          <div class="table-list work-area grow" id="showall" >
+            <table class="">
+              <thead>
+                <tr class="heading">
+                  <th>Work Image</th>
+                  <th>Work Title</th>
+                  <th>Work category</th>
+                  <th>Work description</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in work %}
+                <tr>
+                  <td><img src="{{data.thumbnail_img.url}}" width="80" alt="..."></td>
+                  <td>{{data.title}}</td>
+                  <td>{{data.work_category}}</td>
+                  <td>{{data.description}}</td>
+                
+                  <td>
+                   
+                    <a href="#" 
+                       data-bs-toggle="modal" 
+                       data-bs-target="#updateModal3" 
+                       onclick="openUpdateModalworks(
+                          '{{ data.id }}', 
+                          '{{ data.title }}', 
+                          '{{ data.work_category }}', 
+                          '{{ data.thumbnail_img }}', 
+                          '{{ data.description }}',
+                          '{{ additional_images_data|safe }}'
+                       )">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
+                  
+                </td>
+                
+                <td><a href="delete_works/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="table-list work-area grow" id="powerenergy" style="display: none;">
+            <table class=" " >
+              <thead>
+                <tr class="heading">
+                  <th>Work Image</th>
+                  <th>Work Title</th>
+                  <th>Work category</th>
+                  <th>Work description</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in powerenergy %}
+                <tr>
+                  <td><img src="{{data.thumbnail_img.url}}" width="80" alt="..."></td>
+                  <td>{{data.title}}</td>
+                  <td>{{data.work_category}}</td>
+                  <td>{{data.description}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal3" onclick="openUpdateModalworks('{{ data.id }}','{{data.title}}','{{data.work_category}}','{{data.thumbnail_img}}', '{{data.description}}',)"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="delete_works/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="table-list work-area grow" id="automation" style="display: none;">
+            <table class=" " >
+              <thead>
+                <tr class="heading">
+                  <th>Work Image</th>
+                  <th>Work Title</th>
+                  <th>Work category</th>
+                  <th>Work description</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in automation %}
+                <tr>
+                  <td><img src="{{data.thumbnail_img.url}}" width="80" alt="..."></td>
+                  <td>{{data.title}}</td>
+                  <td>{{data.work_category}}</td>
+                  <td>{{data.description}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal3" onclick="openUpdateModalworks('{{ data.id }}','{{data.title}}','{{data.work_category}}','{{data.thumbnail_img}}', '{{data.description}}',)"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="delete_works/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="table-list work-area grow" id="genrsmart" style="display: none;">
+            <table class=" " >
+              <thead>
+                <tr class="heading">
+                  <th>Work Image</th>
+                  <th>Work Title</th>
+                  <th>Work category</th>
+                  <th>Work description</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in genrsmart %}
+                <tr>
+                  <td><img src="{{data.thumbnail_img.url}}" width="80" alt="..."></td>
+                  <td>{{data.title}}</td>
+                  <td>{{data.work_category}}</td>
+                  <td>{{data.description}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal3" onclick="openUpdateModalworks('{{ data.id }}','{{data.title}}','{{data.work_category}}','{{data.thumbnail_img}}', '{{data.description}}',)"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="delete_works/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="table-list work-area grow" id="cold" style="display: none;">
+            <table class=" " >
+              <thead>
+                <tr class="heading">
+                  <th>Work Image</th>
+                  <th>Work Title</th>
+                  <th>Work category</th>
+                  <th>Work description</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for data in cold %}
+                <tr>
+                  <td><img src="{{data.thumbnail_img.url}}" width="80" alt="..."></td>
+                  <td>{{data.title}}</td>
+                  <td>{{data.work_category}}</td>
+                  <td>{{data.description}}</td>
+                  <td><a href="#" data-bs-toggle="modal" data-bs-target="#updateModal3" onclick="openUpdateModalworks('{{ data.id }}','{{data.title}}','{{data.work_category}}','{{data.thumbnail_img}}', '{{data.description}}',)"><i class="bi bi-pencil-fill"></i></a></td>
+                  <td><a href="delete_works/{{data.id}}" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash-fill"></i></a></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+
+          <!-- Update Modal -->
+          <!-- <div class="modal fade" id="updateModal3" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="updateModalLabel">Edit Gallery Item</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="workForm" action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                      <label for="worktitle" class="form-label">Work Title</label>
+                      <input type="text" class="form-control" id="worktitle" name="worktitle" accept="image/*">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="workcategory" class="form-label">Work Category</label>
+               
+                      <input list="browsers" name="browsers" >
+                        <datalist id="browsers">
+                          <option value="Power & Energy">
+                          <option value="automation">
+                          <option value="cold Storage">
+                          <option value="Genr smart">
+                        </datalist>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="workimage" class="form-label">Work Image</label>
+                      <img id="imagePreview" src="" alt="Current Image" class="img-fluid mb-2" style="display: none;">
+                      <input type="file" class="form-control" id="workimage" name="workimage" accept="image/*">
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="workdescription" class="form-label">Work Description</label>
+                      <input type="text" class="form-control" id="workdescription" name="workdescription" accept="image/*">
+                    </div>
+
+                    <div id="existingImages">
+                  
+                    </div>
+
+               
+                    <label for="newImages">Add New Images:</label>
+                    <input type="file" id="newImages" name="new_images" multiple>
+
+
+                    <button type="submit" class="btn btn-primary w-100">Update</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+          <div class="modal fade" id="updateModal3" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateModalLabel">Edit Work Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="workForm" action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="worktitle" class="form-label">Work Title</label>
+                                <input type="text" class="form-control" id="worktitle" name="worktitle">
+                            </div>
+                            <div class="mb-3">
+                                <label for="workcategory" class="form-label">Work Category</label>
+                                <select name="workcategory" id="workcategory" class="form-control">
+                                    <option value="Power & Energy">Power & Energy</option>
+                                    <option value="Automation">Automation</option>
+                                    <option value="Cold Storage">Cold Storage</option>
+                                    <option value="Genr Smart">Genr Smart</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="workimage" class="form-label">Work Image</label>
+                                <img id="imagePreview" src="" alt="Current Image" class="img-fluid mb-2" style="display: none;">
+                                <input type="file" class="form-control" id="workimage" name="workimage" accept="image/*">
+                            </div>
+                            <div class="mb-3">
+                                <label for="workdescription" class="form-label">Work Description</label>
+                                <input type="text" class="form-control" id="workdescription" name="workdescription">
+                            </div>
+                            <div class="mb-3">
+                              <div id="existingImages">
+                            </div>
+                            <div class="mb-5">
+                              <label for="newImages" class="form-label">Add New Images:</label>
+                              <input type="file" id="newImages" class="form-control" name="new_images" multiple>
+                            </div>
+                        
+                      
+                            <button type="submit" class="btn btn-primary w-100">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+
+
+
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+  
+</body>
+</html>

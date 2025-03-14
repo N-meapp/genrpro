@@ -1,0 +1,52 @@
+.login-box{
+    margin-inline: auto;
+    align-items: center !important;
+    /* background-image: url("../images/genr\ png-01.png"); */
+    width: 45rem;
+    height: 29rem;
+    background-size: cover;
+    border: solid black 2px;
+    box-shadow: #0a0a0a;
+    background-color:#0a243ace;
+    border-radius: 10px;
+
+    
+}
+
+.box{
+    height: 100vh;
+    width: 100%;
+    align-content: center;
+}
+
+
+.admin-body2{
+    /* padding: 5%; */
+    background-color: #b8e4d1;
+}
+
+.login-box h1{
+    color: white;
+    text-align: center;
+}
+
+
+.forms{
+    padding: 10%;
+}
+
+
+form{
+    color: white;
+}
+
+.form-box{
+    padding: 5%;
+}
+/* input{
+    margin-top: 1rem !important;
+} */
+.login-button{
+    margin-top: 1rem;
+    background-color: #4caf50;
+}

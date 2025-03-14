@@ -1,0 +1,455 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Genr</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="{% static 'images/favicon.png' %}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %} " rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/assets/owl.carousel.min.css' %} " rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %} " rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %} " rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %} " rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/contact.css' %} ">
+    <style>
+      .center-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        width: 100%;
+        margin-top: 6rem;
+    }
+    
+    .content-box {
+        max-width: 700px; /* Adjust width as needed */
+    }
+    
+    /* Form Styling */
+    .custom-form {
+        background-color: #F6F7F8;
+        max-width: 900px; /* Increased width */
+        margin: auto;
+        padding: 40px; /* More padding for bigger size */
+        margin-top: 2rem;
+        border-radius: 8px; /* Optional: Adds smooth edges */
+    }
+    
+    /* Input and Select Styling */
+    .custom-form input,
+    .custom-form select {
+        border: none;
+        background: white;
+        width: 100%;
+        outline: none;
+        padding: 16px; /* Increased padding for better usability */
+        font-size: 18px; /* Larger text */
+        appearance: none; /* Removes default browser styling */
+        border-radius: 5px; /* Optional: Rounds corners */
+    }
+    
+    /* Space between fields */
+    .custom-form .mb-3 {
+        margin-bottom: 25px;
+    }
+    
+    /* Placeholder styling for consistency */
+    .custom-form input::placeholder,
+    .custom-form select {
+        color: #666 !important;
+        font-size: 18px;
+    }
+    
+    /* Button Styling */
+    .custom-form button {
+        font-size: 20px; /* Larger button text */
+        padding: 14px; /* Taller button */
+        border-radius: 5px; /* Optional: Smooth button edges */
+        cursor: pointer;
+    }
+    
+    /* Dropdown Styling */
+    .dropdown-container {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+    }
+    
+    .dropdown-container select {
+        width: 100%;
+        padding: 12px;
+        cursor: pointer;
+        background-color: white;
+    }
+    
+    /* Dropdown Arrow Icon */
+    .dropdown-container .dropdown-icon {
+        position: absolute;
+        top: 50%;
+        right: 15px;
+        transform: translateY(-50%);
+        pointer-events: none; /* Prevents interaction */
+        color: #888;
+        font-size: 14px;
+    }
+    
+    
+
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+   <!-- Topbar Start -->
+   <div class="container-fluid bg-dark p-0">
+    <div class="row gx-0 d-none d-lg-flex justify-content-end">
+        <div class="col-auto px-5 text-end">
+            <a href="{% url 'LoadCalc' %}" class="btn btn-link text-primary d-flex align-items-center">
+                <span class="me-2 text-white">Load Calculator</span>
+                <i class="fas fa-calculator fa-lg"></i>
+            </a>
+        </div>
+    </div>
+</div>
+  
+    <!-- Topbar End -->
+
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+        <a href="{% url 'home' %}" class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
+            <img src="{% static 'images/genr png-01.png' %}" alt="Solartec Logo" class="navbar-logo">
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <div class="navbar-nav ms-auto p-4 p-lg-0">
+              <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+      
+              <!-- About Us Dropdown -->
+              <div class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="aboutDropdown">
+                      About Us
+                  </a>
+                  <div class="dropdown-menu bg-light m-0">
+                      <a href="{% url 'about' %}" class="dropdown-item">Company Overview</a>
+                      <a href="{% url 'project' %}" class="dropdown-item">Projects</a>
+                      <a href="{% url 'gallery' %}" class="dropdown-item">Gallery</a>
+                  </div>
+              </div>
+      
+              <!-- Our Services Dropdown -->
+              <div class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" id="servicesDropdown">
+                      Our Services
+                  </a>
+                  <div class="dropdown-menu bg-light m-0">
+                      <a href="{% url 'solar' %}" class="dropdown-item">Genr Power</a>
+                      <a href="{% url 'automation' %}" class="dropdown-item">Genr Automation</a>
+                      <a href="{% url 'cold_storage' %}" class="dropdown-item">Genr Cold Storage</a>
+                  </div>
+              </div>
+      
+              <!-- Offers -->
+              <a href="{% url 'home' %}#offers" class="nav-item nav-link">Offers</a>
+              <a href="{% url 'careers' %}" class="nav-item nav-link active">Careers</a>
+      
+              <!-- Contact -->
+              <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+          </div>
+      
+          <!-- Request Service Button -->
+          <a href="{% url 'request_service' %}" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">
+              Request For A Service <i class="fa fa-arrow-right ms-3"></i>
+          </a>
+      </div>
+      
+    </nav>
+    <!-- Navbar End -->
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 mb-5">
+        <div class="container py-5">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Careers</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="{% url 'home' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="contact">Careers</a></li>
+                    <!-- <li class="breadcrumb-item text-white active" aria-current="page">Contact</li> -->
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    
+
+     <div class="container">
+        <div class="text-center mb-12">
+            <h1>Genr Careers</h1>
+            <p>Have a zeal to contribute to the real world and create a visible impact in businesses and lives of consumers? We are transforming businesses and consumer experience every day using technology.</p>
+        </div>
+
+        <div class="grid">
+            {% for i in careerdata %}   
+            <div class="job-listing">
+                <h2>{{i.job_title}}</h2>
+                <p>{{i.job_description}}</p>
+                <div class="details">
+                    <span><i class="fas fa-clock"></i> {{i.work_time}}</span>
+                </div>
+                <div class="apply-btn">
+                    <div class="contact-group">
+                        <i class="fa fa-phone-alt"></i>
+                        <a href="tel:9400420130" class="ml-2">{{i.phone_number}} </a>
+                    </div>
+                    <div class="contact-group ml-4">
+                        <i class="fa fa-envelope"></i>
+                        <a href="mailto:info@genr.in" class="ml-2">{{i.email}}</a>
+                    </div>
+                </div>
+                
+            </div>
+            {% endfor %}
+
+
+
+        </div> 
+    </div>
+    
+
+
+  
+  <div class="center-container">
+      <div class="content-box">
+          <h1 class="mb-4">Apply for Your Dream Job</h1>
+          <p class="mb-4 pb-2">
+            Ready to advance your career? Fill out the form below and upload your CV. Our team will review your application and reach out soon!
+          </p>
+      </div>
+  </div>
+  
+
+  <form id="jobApplicationForm" method="POST" action="apply/" enctype="multipart/form-data" class="custom-form">
+    {% csrf_token %}
+    
+    <!-- Web3Forms Access Key -->
+    <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+
+    <div class="mb-3">
+        <input type="text" name="name" placeholder="Full Name" required>
+    </div>
+
+    <div class="mb-3">
+        <input type="email" name="email" placeholder="Email" required>
+    </div>
+
+    <div class="mb-3">
+        <input type="text" name="phone_number" placeholder="Phone Number" required>
+    </div>
+
+    <div class="mb-3 dropdown-container">
+      <select name="job_position" required>
+          <option value="" disabled selected>Select Job Position</option>
+          {% for i in careerdata %}
+              <option value="{{ i.job_title }}">{{ i.job_title }}</option>
+          {% endfor %}
+      </select>
+      <i class="fa fa-chevron-down dropdown-icon"></i>
+    </div>
+
+    <div class="mb-3">
+        <input type="file" name="resume" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Submit Application</button>
+</form>
+
+<!-- JavaScript to Send Data to Web3Forms -->
+<script>
+document.getElementById("jobApplicationForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default submission
+
+    let formData = new FormData(this);
+
+    // Remove the resume file since Web3Forms doesn't support file uploads
+    formData.delete("resume");
+
+    // Send data to Web3Forms
+    fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData
+    }).then(response => response.json())
+    .then(data => {
+        console.log("Web3Forms Response:", data);
+    }).catch(error => {
+        console.error("Error sending to Web3Forms:", error);
+    });
+
+    // Proceed with normal form submission to Django backend
+    this.submit();
+});
+</script>
+
+
+
+  
+  
+<!-- Footer Start -->
+<div
+class="container-fluid bg-dark text-body footer mt-5 pt-5 wow fadeIn"
+data-wow-delay="0.1s"
+>
+<div class="container py-5">
+  <div class="row g-5">
+    <div class="col-lg-3 col-md-6">
+      <h5 class="text-white mb-4">Address</h5>
+      <p class="mb-2">
+        <i class="fa fa-map-marker-alt me-3"></i>Yem Yem Aar Arcade
+        Malamal Junction
+      </p>
+      <p class="mb-2">
+        <i class="fa fa-phone-alt me-3"></i>+91 9400420125
+      </p>
+      <p class="mb-2">
+        <i class="fa fa-phone-alt me-3"></i>+91 9400420130
+      </p>
+      <p class="mb-2">
+        <i class="fa fa-envelope me-3"></i>
+        <a href="mailto:Info@genr.in" class="email-link">info@genr.in</a>
+      </p>
+
+      <div class="d-flex pt-2">
+        <a
+          class="btn btn-square btn-outline-light btn-social"
+          href="https://www.facebook.com/profile.php?id=61571895401687"
+          ><i class="fab fa-facebook-f"></i
+        ></a>
+        <a
+          class="btn btn-square btn-outline-light btn-social"
+          href="https://wa.me/+919400420130"
+          ><i class="fab fa-whatsapp"></i
+        ></a>
+        <a
+          class="btn btn-square btn-outline-light btn-social"
+          href="http://www.instagram.com/genr_power/"
+          ><i class="fab fa-instagram"></i
+        ></a>
+        <a
+          class="btn btn-square btn-outline-light btn-social"
+          href="https://www.youtube.com/@GenrPower"
+          ><i class="fab fa-youtube"></i
+        ></a>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <h5 class="text-white mb-4">Quick Links</h5>
+      <a class="btn btn-link" href="{% url 'about' %}">About Us</a>
+      <a class="btn btn-link" href="{% url 'contact' %}">Contact Us</a>
+      <a class="btn btn-link" href="{% url 'project' %}">Projects</a>
+      <a class="btn btn-link" href="{% url 'solar' %}">Solar Plants</a>
+      <a class="btn btn-link" href="{% url 'gallery' %}">Our Gallery</a>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <h5 class="text-white mb-4">Our Services</h5>
+      <a class="btn btn-link" href="{% url 'solar' %}">Solar Plants</a>
+      <a class="btn btn-link" href="{% url 'automation' %}">Automation</a>
+      <a class="btn btn-link" href="{% url 'cold_storage' %}">Cold Storage</a>
+      {% comment %} <a class="btn btn-link" href="{% url 'genrsmart' %}">Genr Smart</a> {% endcomment %}
+      <a class="btn btn-link" href="{% url 'request_service' %}"
+        >Request a Service</a
+      >
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <h5 class="text-white mb-4">Find Us</h5>
+      <div
+        style="
+          width: 100%;
+          max-width: 300px;
+          margin: auto;
+          border-radius: 15px;
+          overflow: hidden;
+        "
+      >
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d31432.603850135623!2d76.3068416!3d10.010624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e0!3m2!1sen!2sin!4v1735628082065!5m2!1sen!2sin"
+          width="100%"
+          height="200"
+          style="border: 0; border-radius: 15px"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        >
+        </iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="copyright">
+    <div class="row">
+      <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+        &copy; <a href="#">Genr</a>, All Right Reserved.
+      </div>
+      <div class="col-md-6 text-center text-md-end">
+        <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+        <a>Designed By N-Me 360</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'lib/isotope/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>
