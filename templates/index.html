@@ -77,65 +77,75 @@
           text-align: center;
       }
     
-        .social-link {
-            display: flex;
-            align-items: center;
-            width: 50px;
-            padding: 5px;
-            background: white;
-            color: black;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 25px;
-            overflow: hidden;
-            transition: width 0.3s ease-in-out;
-            white-space: nowrap;
-            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-            margin-bottom: 8px; /* Added margin to create spacing */
-        }
-      
-        .icon-circle {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
-            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .icon-circle i {
-            font-size: 20px;
-        }
-      
-        .social-link span {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            padding-left: 10px;
-        }
-      
-        .social-link:hover {
-            width: 160px;
-        }
-      
-        .social-link:hover span {
-            display: inline;
-            opacity: 1;
-        }
-      
-        /* Custom Colors */
-        .social-link:nth-child(1) .icon-circle { background: #1877F2; color: white; } /* Facebook */
-        .social-link:nth-child(2) .icon-circle { background: #25D366; color: white; } /* WhatsApp */
-        .social-link:nth-child(3) .icon-circle { background: #FF0000; color: white; } /* YouTube */
-      
-        /* Removes extra margin from the last element */
-        .social-link:last-child {
-            margin-bottom: 0;
-        }
-      
-      
+      .social-icons {
+        margin-left: 25px; /* Moves the icons slightly to the right */
+    }
+    
+    .social-link {
+        display: flex;
+        align-items: center;
+        width: 50px;
+        padding: 5px;
+        background: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 25px;
+        overflow: hidden;
+        transition: width 0.3s ease-in-out;
+        white-space: nowrap;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 8px; /* Added margin to create spacing */
+    }
+    
+    /* Circle styles */
+    .icon-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .icon-circle i {
+        font-size: 20px;
+    }
+    
+    /* Text styling */
+    .social-link span {
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        padding-left: 10px;
+    }
+    
+    /* Hover effects */
+    .social-link:hover {
+        width: 160px;
+    }
+    
+    .social-link:hover span {
+        display: inline;
+        opacity: 1;
+    }
+    
+    /* Custom Colors */
+    .social-link:nth-child(1) .icon-circle { background: #1877F2; color: white; } /* Facebook */
+    .social-link:nth-child(1) span { color: #1877F2; } /* Facebook text */
+    
+    .social-link:nth-child(2) .icon-circle { background: #25D366; color: white; } /* WhatsApp */
+    .social-link:nth-child(2) span { color: #25D366; } /* WhatsApp text */
+    
+    .social-link:nth-child(3) .icon-circle { background: #FF0000; color: white; } /* YouTube */
+    .social-link:nth-child(3) span { color: #FF0000; } /* YouTube text */
+    
+    /* Removes extra margin from the last element */
+    .social-link:last-child {
+        margin-bottom: 0;
+    }
+    
       
   </style>
   </head>
