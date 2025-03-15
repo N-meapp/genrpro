@@ -76,6 +76,66 @@
           width: 32%;
           text-align: center;
       }
+    
+        .social-link {
+            display: flex;
+            align-items: center;
+            width: 50px;
+            padding: 5px;
+            background: white;
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 25px;
+            overflow: hidden;
+            transition: width 0.3s ease-in-out;
+            white-space: nowrap;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            margin-bottom: 8px; /* Added margin to create spacing */
+        }
+      
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .icon-circle i {
+            font-size: 20px;
+        }
+      
+        .social-link span {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            padding-left: 10px;
+        }
+      
+        .social-link:hover {
+            width: 160px;
+        }
+      
+        .social-link:hover span {
+            display: inline;
+            opacity: 1;
+        }
+      
+        /* Custom Colors */
+        .social-link:nth-child(1) .icon-circle { background: #1877F2; color: white; } /* Facebook */
+        .social-link:nth-child(2) .icon-circle { background: #25D366; color: white; } /* WhatsApp */
+        .social-link:nth-child(3) .icon-circle { background: #FF0000; color: white; } /* YouTube */
+      
+        /* Removes extra margin from the last element */
+        .social-link:last-child {
+            margin-bottom: 0;
+        }
+      
+      
       
   </style>
   </head>
@@ -177,21 +237,97 @@
     </nav>
     <!-- Navbar End -->
 <!-- Social Icons Start -->
-<!-- Social Icons Start -->
-<div class="social-icons position-fixed start-0 top-50 translate-middle-y d-flex flex-column align-items-center" 
-     style="z-index: 9999; background: rgba(0, 0, 0, 0.7); padding: 20px; border-radius: 0 10px 10px 0;">
+
+ {% comment %} <div class="social-icons position-fixed start-0 top-50 translate-middle-y d-flex flex-column align-items-start" 
+     style="z-index: 9999;">
   
-  <div class="icon-wrapper d-flex flex-column gap-4"> <!-- Added gap for spacing -->
-      <a href="https://www.facebook.com/profile.php?id=61571895401687" class="d-block" target="_blank">
-          <i class="fab fa-facebook-f" style="color: #1877F2; font-size: 30px;"></i>
-      </a>
-      <a href="https://wa.me/+919400420130" class="d-block" target="_blank">
-          <i class="fab fa-whatsapp" style="color: #25D366; font-size: 30px;"></i>
-      </a>
-      <a href="https://www.youtube.com/@GenrPower" class="d-block" target="_blank">
-          <i class="fab fa-youtube" style="color: #FF0000; font-size: 30px;"></i>
-      </a>
-  </div>
+  <a href="https://www.facebook.com/profile.php?id=61571895401687" class="social-link" target="_blank">
+      <div class="icon-circle"><i class="fab fa-facebook-f"></i></div>
+      <span>Facebook</span>
+  </a>
+  <a href="https://wa.me/+919400420130" class="social-link" target="_blank">
+      <div class="icon-circle"><i class="fab fa-whatsapp"></i></div>
+      <span>WhatsApp</span>
+  </a>
+  <a href="https://www.youtube.com/@GenrPower" class="social-link" target="_blank">
+      <div class="icon-circle"><i class="fab fa-youtube"></i></div>
+      <span>YouTube</span>
+  </a>
+
+</div>
+
+<style>
+  .social-link {
+      display: flex;
+      align-items: center;
+      width: 50px;  /* Reduced default width */
+      padding: 5px;
+      background: transparent;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 25px;
+      overflow: hidden;
+      transition: width 0.3s ease-in-out;
+      white-space: nowrap;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+      margin-bottom:2px;
+  }
+
+  .icon-circle {
+      width: 40px; /* Reduced size */
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .icon-circle i {
+      font-size: 18px; /* Adjusted size */
+  }
+
+  .social-link span {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      padding-left: 8px;
+  }
+
+  .social-link:hover {
+      width: 130px;  /* Reduced expansion width */
+  }
+
+  .social-link:hover span {
+      display: inline;
+      opacity: 1;
+      
+  }
+
+  /* Custom Colors */
+  .social-link:nth-child(1) .icon-circle { background: #1877F2; color: white; } /* Facebook */
+  .social-link:nth-child(2) .icon-circle { background: #25D366; color: white; } /* WhatsApp */
+  .social-link:nth-child(3) .icon-circle { background: #FF0000; color: white; } /* YouTube */
+</style>  {% endcomment %}
+
+
+ <div class="social-icons position-fixed start-0 top-50 translate-middle-y d-flex flex-column align-items-start gap-2" 
+     style="z-index: 9999;">
+  
+  <a href="https://www.facebook.com/profile.php?id=61571895401687" class="social-link" target="_blank">
+      <div class="icon-circle"><i class="fab fa-facebook-f"></i></div>
+      <span>Facebook</span>
+  </a>
+  <a href="https://wa.me/+919400420130" class="social-link" target="_blank">
+      <div class="icon-circle"><i class="fab fa-whatsapp"></i></div>
+      <span>WhatsApp</span>
+  </a>
+  <a href="https://www.youtube.com/@GenrPower" class="social-link" target="_blank">
+      <div class="icon-circle"><i class="fab fa-youtube"></i></div>
+      <span>YouTube</span>
+  </a>
 
 </div>
 
