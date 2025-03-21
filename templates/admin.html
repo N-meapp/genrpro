@@ -39,6 +39,7 @@
             <button onclick="showOfferFunction('contact-section')" class="nav-item" id="contact-section-id">Contact Form</button>
             <button onclick="showOfferFunction('news-section')" class="nav-item" id="news-section-id">News</button>
             <button onclick="showOfferFunction('count-section')" class="nav-item" id="count-section-id">Count</button>
+            <button onclick="showOfferFunction('rating-section')" class="nav-item" id="rating-section-id">Rating</button>
            <a href="logout"><button  class="nav-item" >Logout</button></a> 
           </div>
         </div>
@@ -495,6 +496,49 @@
               </tbody>
             </table>
           </div>
+
+
+          <div class="table-content grow" id="rating-section" style="display: none;">
+            
+            <div class="table-list" >
+              <table>
+                <thead>
+                  <tr class="heading">
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Customer ID </th>                
+                    <th>Work </th>
+                    <th>Company Name</th>
+                    <th>Message</th>
+                    <th>Rating</th>
+
+                    
+  
+           
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for data in rating %}
+                  <tr>
+                    <td>{{data.full_name}}</td>
+                      <td>{{data.email}}</td>
+                      <td>{{data.customer_id}}</td>
+                      <td>{{data.work}}</td>
+                      <td>{{data.company_name}}</td>
+                      <td>{{data.message}}</td>
+                      <td>{{data.rating}}</td>
+  
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+  
+
+
+
+
           <!-- updating modal of offer -->
 
           <div class="modal fade" id="updateModalcareer" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">

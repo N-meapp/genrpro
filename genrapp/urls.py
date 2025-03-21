@@ -50,6 +50,8 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     # path('login/', views.login_view, name='login_view'),
     path('logout/', views.logout_view, name='logout'),
+    # path('submit-review/', views.submit_review, name='submit_review'),
+
 
 ]
  

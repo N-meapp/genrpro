@@ -120,3 +120,31 @@ class Count(models.Model):
 
     def __str__(self):
         return "Counts Data"
+    
+class WorkPlace(models.Model):
+    WorkPlace = models.CharField(max_length=50, blank=True, null=True)
+    
+    def __str__(self):
+        return self.WorkPlace
+
+
+class CustomerReview(models.Model):
+    full_name = models.CharField(max_length=100)
+    email = models.CharField(max_length=50)
+    customer_id = models.CharField(max_length=15, blank=True, null=True)
+    work = models.CharField(max_length=100, blank=True, null=True)
+    company_name = models.CharField(max_length=100, blank=True, null=True)
+    message = models.TextField()
+
+    # Star rating field
+    rating = models.DecimalField(
+        max_digits=2,  # Allow ratings up to 99 (e.g., 5.0, 4.5, etc.)
+        decimal_places=1,  # For half-star ratings (e.g., 4.5)
+        blank=True,  # Optional field (if you want to make it optional)
+        null=True,  # Allow null values if the rating is not provided
+    )
+
+    def __str__(self):
+        return f"{self.full_name} - {self.rating} stars"
+
+   

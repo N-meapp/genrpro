@@ -32,9 +32,43 @@ def home(request):
     }
     return render(request,'index.html',context)
 
+
 def about(request):
+    # Retrieve all news and workplace records from the database
     news = News.objects.all()
-    return render(request,'about.html',{'news':news})
+    work_place = WorkPlace.objects.all()
+    
+    # Variable to store the success message
+    msg = ""
+    
+    # Check if the request method is POST (i.e., form submission)
+    if request.method == 'POST':
+        # Create a new instance of CustomerReview
+        data1 = CustomerReview()
+        
+        # Retrieve form data from the POST request
+        full_name = request.POST.get('full_name')
+        email = request.POST.get('email')
+        company_name = request.POST.get('company_name', '')  # Default to empty string if not provided
+        message = request.POST.get('message')
+        customer_id = request.POST.get('customer_id')
+        
+        # Assign values to the CustomerReview instance
+        data1.full_name = full_name
+        data1.email = email
+        data1.company_name = company_name
+        data1.message = message
+        data1.customer_id = customer_id
+        
+        
+        # Save the review to the database
+        data1.save()
+        
+        # Set the success message to be displayed in the template
+        msg = "Thanks for your review!"
+
+    # Render the about page with the news, work_place, and msg context
+    return render(request, 'about.html', {'news': news, 'work_place': work_place, 'msg': msg})
 
 def automation(request):
     return render(request,'automation.html')
@@ -377,6 +411,7 @@ def dashboard(request):
 
         additional_work = Addiotional_work_images.objects.all()
         show_news = News.objects.all()
+        rating = CustomerReview.objects.all()
 
 
         context={
@@ -399,6 +434,7 @@ def dashboard(request):
                 'gallerygenrsmart': genramartgallery,
                 'generatoradmin': generatoradmin,
                 'news': show_news,
+                'rating':rating
 
 
             }
@@ -697,3 +733,11 @@ def contact_delete(request,id):
     if contact:
         contact.delete()
     return redirect('dashboard')
+
+# def submit_review(request):
+#     reviews = CustomerReview.objects.all()
+#     context = {
+#         'review': reviews
+#     }
+#     return render(request, 'about.html', context)
+

@@ -327,37 +327,48 @@
                     <h6 class="text-primary">Raise An Issue</h6>
                     <h1 class="mb-4">Let Us Know Your Concern!</h1>
                     <p class="mb-4">Kindly provide as much detail as possible so we can resolve your complaint efficiently. Thank you for giving us the opportunity to make things right.</p>
-                    <form action="{% url 'contact_form' %}" method="POST">
+                    <form  method="POST">
                         {% csrf_token %}
-                        <input type="hidden" name="access_key" value="7602f21f-477d-4668-8070-0b4e7ae9ae03">
+                        {% comment %} <input type="hidden" name="access_key" value="7602f21f-477d-4668-8070-0b4e7ae9ae03"> {% endcomment %}
                     
                         <div class="row g-3">
                             <div class="col-12 col-sm-6">
-                                <input type="text" name="name" class="form-control border-0" placeholder="Your Name" required>
+                                <input type="text" name="full_name" class="form-control border-0" placeholder="Your Name" required>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <input type="email" name="email" class="form-control border-0" placeholder="Your Email" required>
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="text" name="mobile" class="form-control border-0" placeholder="Your Mobile">
+                                <input type="text" name="workplace" class="form-control border-0" placeholder="Work" required>
                             </div>
+                            
                             <div class="col-12 col-sm-6">
-                                <select name="enquiry" class="form-select border-0" required>
-                                    <option selected disabled>Enquiry</option>
-                                    <option value="Power And Energy">Power And Energy</option>
-                                    <option value="Automation">Automation</option>
-                                    <option value="Cold Storage">Cold Storage</option>
-                                    <option value="Genr Smart">Genr Smart</option>
-                                    <option value="Genr Careers">Genr Careers</option>
-                                </select>
+                                <input type="text" name="company_name" class="form-control border-0" placeholder="Your Company Name">
                             </div>
+
                             <div class="col-12">
                                 <textarea name="message" class="form-control border-0" placeholder="Message" required></textarea>
                             </div>
-                            <div class="col-12">
-                                <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Submit</button>
+                           <div class="col-12 col-sm-6">
+                            <input type="text" name="customer_id" class="form-control border-0" placeholder="Customer ID" required>
+
+                           </div>
+                           <!-- Star Rating (using Font Awesome icons) -->
+                           <div class="col-12 col-sm-6">
+                                <label for="rating">Rating:</label>
+                                <div class="stars"> 
+                                    <i class="fas fa-star" data-value="1"></i>
+                                    <i class="fas fa-star" data-value="2"></i>
+                                    <i class="fas fa-star" data-value="3"></i>
+                                    <i class="fas fa-star" data-value="4"></i>
+                                    <i class="fas fa-star" data-value="5"></i>
+                                </div><br><br>
+
+                            <!-- Hidden input to store the selected rating -->
+                            <input type="hidden" name="rating" id="rating-input" value=""><br><br>
                             </div>
                         </div>
+                        <input type="submit" value="Submit">
                     </form>
                     
                 </div>
@@ -481,7 +492,27 @@ data-wow-delay="0.1s"
 </div>
 </div>
 <!-- Footer End -->
+<script>
+    // JavaScript for handling the star rating selection
+    const stars = document.querySelectorAll('.stars i');
+    const ratingInput = document.getElementById('rating-input');
 
+    // Loop over each star and set up the click event listener
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const value = star.getAttribute('data-value');  // Get the value of the clicked star
+            ratingInput.value = value;  // Set the hidden input's value
+
+            // Remove 'selected' class from all stars
+            stars.forEach(s => s.classList.remove('selected'));
+
+            // Add 'selected' class to clicked stars and previous ones
+            for (let i = 0; i < value; i++) {
+                stars[i].classList.add('selected');
+            }
+        });
+    });
+</script>
 
 
     <!-- Back to Top -->

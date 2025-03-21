@@ -17,6 +17,8 @@ admin.site.register(JobApplication)
 admin.site.register(News)
 admin.site.register(Login)
 admin.site.register(Count)
+admin.site.register(WorkPlace)
+admin.site.register(CustomerReview)
 
 class Additional_imagesTabular(admin.TabularInline):
     model = Addiotional_work_images
