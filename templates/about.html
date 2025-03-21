@@ -354,20 +354,21 @@
 
                            </div>
                            <!-- Star Rating (using Font Awesome icons) -->
-                           <div class="col-12 col-sm-6">
+                            <div class="col-12 col-sm-6">
                                 <label for="rating">Rating:</label>
-                                <div class="stars"> 
+                                <div class="stars">
                                     <i class="fas fa-star" data-value="1"></i>
                                     <i class="fas fa-star" data-value="2"></i>
                                     <i class="fas fa-star" data-value="3"></i>
                                     <i class="fas fa-star" data-value="4"></i>
                                     <i class="fas fa-star" data-value="5"></i>
-                                </div><br><br>
-
-                            <!-- Hidden input to store the selected rating -->
-                            <input type="hidden" name="rating" id="rating-input" value="" required ><br><br>
+                                </div>
+                                <br><br>
+                        
+                                <!-- Hidden input to store the selected rating -->
+                                <input type="hidden" name="rating" id="rating-input" value="" required>
+                                <br><br>
                             </div>
-                        </div>
                         <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Submit</button>
 
                     </form>
@@ -495,24 +496,36 @@ data-wow-delay="0.1s"
 <!-- Footer End -->
 <script>
     // JavaScript for handling the star rating selection
-    const stars = document.querySelectorAll('.stars i');
-    const ratingInput = document.getElementById('rating-input');
+    document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll(".stars i");
+    const ratingInput = document.getElementById("rating-input");
 
-    // Loop over each star and set up the click event listener
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            const value = star.getAttribute('data-value');  // Get the value of the clicked star
-            ratingInput.value = value;  // Set the hidden input's value
+    // Set default rating value to 1
+    let selectedRating = 1;
+    ratingInput.value = selectedRating;
 
-            // Remove 'selected' class from all stars
-            stars.forEach(s => s.classList.remove('selected'));
-
-            // Add 'selected' class to clicked stars and previous ones
-            for (let i = 0; i < value; i++) {
-                stars[i].classList.add('selected');
+    // Function to update star highlighting
+    function updateStars(rating) {
+        stars.forEach(s => {
+            s.classList.remove("selected");
+            if (s.getAttribute("data-value") <= rating) {
+                s.classList.add("selected");
             }
         });
+    }
+
+    // Set initial star highlight
+    updateStars(selectedRating);
+
+    stars.forEach(star => {
+        star.addEventListener("click", function () {
+            selectedRating = this.getAttribute("data-value");
+            ratingInput.value = selectedRating;
+            updateStars(selectedRating);
+        });
     });
+});
+
 </script>
 
 

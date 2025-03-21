@@ -28,7 +28,10 @@
       href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Roboto:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-
+    <!-- font awesome cdn -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+ 
+       
     <!-- Icon Font Stylesheet -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
@@ -144,6 +147,19 @@
     /* Removes extra margin from the last element */
     .social-link:last-child {
         margin-bottom: 0;
+    }
+
+    @media (max-width: 1024px) {
+    .service-row {
+      display: block !important;
+      justify-content: space-between;
+      width: 100% !important;
+    }
+    .service{
+      width: 100% !important;
+      padding-top: 1rem;
+
+    }
     }
     
       
@@ -665,7 +681,7 @@
     <!-- about end -->
 
     <!-- offer start -->
- 
+ {% if offer_data %}
 <div id="offers">
 </div>
     <div class="slider-container">
@@ -703,7 +719,7 @@
         </button>
       </div>
     </div>
- 
+ {% endif %}
 
     <!-- Our services start -->
     <div class="container-xxl py-5">
@@ -1011,30 +1027,60 @@
 </div>
 <!-- Counts Section End -->
 <!--Customer Review Section Start-->
-<div class="container">
+<!-- <div class="review">
   <div class="col-lg-12">
-    <div class="row image">
-
-
+    <div class="row image review-shadow">
+      <div class="review_black"><h1 class="review_head">Customer Experiences <br>& Insights</h1></div>
       <div class="col-md-8 col-lg-6 wow fadeIn " data-wow-delay="0.7s"></div>
-
       <div class="col-md-3 col-lg-2 wow fadeIn revie_box test">
+        {% for i in rating %}
         <div class="review-card">
-            <h6>Video games</h6>
-            <p>Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
-        </div>
+          <h6 style="text-transform: capitalize;  font-weight: bold;">{{i.full_name}}</h6>
+          <p class="review-text">
+            <i class="fa-solid fa-quote-left"></i> {{ i.message|slice:":140" }}... <i class="fa-solid fa-quote-right"></i>
+              <span class="see-more" onclick="toggleText(this)">See More</span>
+          </p>
+          
+          <p class="full-review hidden"></i><i class="fa-solid fa-quote-left"></i> {{ i.message }} <i class="fa-solid fa-quote-right"></i></p>
+          <h6><i class="fas fa-star" style="font-size: 12px;color: rgb(236, 173, 95);"></i>  {{i.rating}}</h6>
+      </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div> -->
+{% if rating %}
+<div class="review">
+  <div class="col-lg-12">
+    <div class="row image review-shadow">
+      <div class="review_black">
+        <h1 class="review_head">Customer Experiences <br>& Insights</h1>
+      </div>
+      <div class="col-md-8 col-lg-6 wow fadeIn" data-wow-delay="0.7s"></div>
+      <div class="col-md-3 col-lg-2 wow fadeIn revie_box test">
+        {% for i in rating %}
         <div class="review-card">
-            <h6>Video games</h6>
-            <p>Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
+          <h6 style="text-transform: capitalize; font-weight: bold;">{{ i.full_name }}</h6>
+          <p class="review-text">
+            <i class="fa-solid fa-quote-left"></i> {{ i.message|slice:":140" }}... 
+            <i class="fa-solid fa-quote-right"></i>
+            <span class="see-more" onclick="toggleText(this)">See More</span>
+          </p>
+          <p class="full-review hidden">
+            <i class="fa-solid fa-quote-left"></i> {{ i.message }} 
+            <i class="fa-solid fa-quote-right"></i>
+          </p>
+          <h6>
+            <i class="fas fa-star" style="font-size: 12px; color: rgb(236, 173, 95);"></i> 
+            {{ i.rating }}
+          </h6>
         </div>
-        <div class="review-card">
-            <h6>Video games</h6>
-            <p>Sample text. Click to select the text box. Click again or double click to start editing the text.</p>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
 </div>
+{% endif %}
 <!--Customer Review Section End-->
 
     <!-- Contact Start -->
@@ -1238,5 +1284,15 @@
 
     <!-- Template Javascript -->
     <script src="{% static 'js/main.js' %}"></script>
+
+    <script>function toggleText(element) {
+      let parent = element.parentElement;
+      let fullText = parent.nextElementSibling;
+      
+      if (fullText.classList.contains("hidden")) {
+          fullText.classList.remove("hidden");
+          parent.style.display = "none"; 
+      }
+  }</script>
   </body>
 </html>

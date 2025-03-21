@@ -28,7 +28,8 @@ def home(request):
     context ={
     'offer_data': Offer.objects.all(),
     'news':news,
-    'counts': counts
+    'counts': counts,
+    'rating':CustomerReview.objects.all()
     }
     return render(request,'index.html',context)
 
@@ -52,6 +53,8 @@ def about(request):
         company_name = request.POST.get('company_name', '')  # Default to empty string if not provided
         message = request.POST.get('message')
         customer_id = request.POST.get('customer_id')
+        review = request.POST.get('rating')
+
         
         # Assign values to the CustomerReview instance
         data1.full_name = full_name
@@ -59,6 +62,8 @@ def about(request):
         data1.company_name = company_name
         data1.message = message
         data1.customer_id = customer_id
+        data1.rating = review
+
         
         
         # Save the review to the database
@@ -69,6 +74,14 @@ def about(request):
 
     # Render the about page with the news, work_place, and msg context
     return render(request, 'about.html', {'news': news, 'work_place': work_place, 'msg': msg})
+
+
+def Review_delete(request, id):
+    review = CustomerReview.objects.get(id=id)
+    review.delete()
+    return redirect('dashboard')
+
+
 
 def automation(request):
     return render(request,'automation.html')
