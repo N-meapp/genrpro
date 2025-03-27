@@ -1,0 +1,93 @@
+<div class="w-full h-auto mt-36">
+  <div class="w-full h-32 text-4xl font-bold">
+    <h1 class="text-black text-center">Catering for Every Occasion</h1>
+    <hr class="border-t-2 border-yellow-700 my-4 w-44 mx-auto">
+  </div>
+
+  <!-- Section 1 -->
+  <div class="section mt-20 w-[85%] h-full mx-auto flex flex-row justify-between gap-5" id="section-1">
+    <div class="w-full h-full">
+      <img src="/assets/images/wedding.png">
+      <hr class="border-t-2 border-yellow-700 my-4 w-full mx-auto">
+    </div>
+    <div class="border-l-2 border-yellow-700" style="height: 28rem;"></div>
+    <div class="w-full h-full my-auto">
+      <h1 class="text-2xl font-bold leading-10 pl-10">Weddings: A Feast for Your <br>Special Day</h1>
+      <div class="mt-11 leading-8 pl-10 text-justify">
+        <p>Your wedding day is one of the most special and unforgettable moments of your life...</p>
+      </div>
+    </div>
+    <div class="pl-20 flex items-center justify-center h-full my-auto">
+      <i class="fa-solid fa-angle-right text-4xl text-yellow-700 cursor-pointer" onclick="showNextSection(1)"></i>
+    </div>
+  </div>
+
+  <!-- Section 2 (Initially hidden) -->
+  <div class="section mt-20 w-[85%] h-full mx-auto flex flex-row justify-between gap-5 hidden" id="section-2">
+    <div class="w-full h-full">
+      <img src="/assets/images/wedding.png">
+      <hr class="border-t-2 border-yellow-700 my-4 w-full mx-auto">
+    </div>
+    <div class="border-l-2 border-yellow-700" style="height: 28rem;"></div>
+    <div class="w-full h-full my-auto">
+      <h1 class="text-2xl font-bold leading-10 pl-10">Weddings: A Feast for Your <br>Special Day</h1>
+      <div class="mt-11 leading-8 pl-10 text-justify">
+        <p>Your wedding day is one of the most special and unforgettable moments of your life...</p>
+      </div>
+    </div>
+    <div class="pl-20 flex items-center justify-center h-full my-auto">
+      <i class="fa-solid fa-angle-right text-4xl text-yellow-700 cursor-pointer" onclick="showNextSection(2)"></i>
+    </div>
+  </div>
+
+  <!-- Section 3 (Initially hidden) -->
+  <div class="section mt-20 w-[85%] h-full mx-auto flex flex-row justify-between gap-5 hidden" id="section-3">
+    <div class="w-full h-full">
+      <img src="/assets/images/wedding.png">
+      <hr class="border-t-2 border-yellow-700 my-4 w-full mx-auto">
+    </div>
+    <div class="border-l-2 border-yellow-700" style="height: 28rem;"></div>
+    <div class="w-full h-full my-auto">
+      <h1 class="text-2xl font-bold leading-10 pl-10">Weddings: A Feast for Your <br>Special Day</h1>
+      <div class="mt-11 leading-8 pl-10 text-justify">
+        <p>Your wedding day is one of the most special and unforgettable moments of your life...</p>
+      </div>
+    </div>
+    <div class="pl-20 flex items-center justify-center h-full my-auto">
+      <i class="fa-solid fa-angle-right text-4xl text-yellow-700 cursor-pointer" onclick="showNextSection(3)"></i>
+    </div>
+  </div>
+
+  <!-- Section 4 (Initially hidden) -->
+  <div class="section mt-20 w-[85%] h-full mx-auto flex flex-row justify-between gap-5 hidden" id="section-4">
+    <div class="w-full h-full">
+      <img src="/assets/images/wedding.png">
+      <hr class="border-t-2 border-yellow-700 my-4 w-full mx-auto">
+    </div>
+    <div class="border-l-2 border-yellow-700" style="height: 28rem;"></div>
+    <div class="w-full h-full my-auto">
+      <h1 class="text-2xl font-bold leading-10 pl-10">Weddings: A Feast for Your <br>Special Day</h1>
+      <div class="mt-11 leading-8 pl-10 text-justify">
+        <p>Your wedding day is one of the most special and unforgettable moments of your life...</p>
+      </div>
+    </div>
+    <div class="pl-20 flex items-center justify-center h-full my-auto">
+      <i class="fa-solid fa-angle-right text-4xl text-yellow-700 cursor-pointer" onclick="showNextSection(4)"></i>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showNextSection(currentSection) {
+    // Hide the current section
+    document.getElementById(`section-${currentSection}`).classList.add("hidden");
+
+    // Show the next section
+    const nextSection = currentSection + 1;
+    const nextSectionElement = document.getElementById(`section-${nextSection}`);
+
+    if (nextSectionElement) {
+      nextSectionElement.classList.remove("hidden");
+    }
+  }
+</script>

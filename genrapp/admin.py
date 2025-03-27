@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import *
 from genrapp.models import JobApplication,ContactForm
-
+from django.utils.html import format_html
 
 
 # Register your models here.
@@ -12,7 +12,17 @@ admin.site.register(Gallery)
 admin.site.register(Offer)
 admin.site.register(Enquiry)
 admin.site.register(Career)
-admin.site.register(JobApplication)
+class JobApplicationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'job_position', 'view_cv')
+
+    def view_cv(self, obj):
+        if obj.cv:
+            return format_html('<a href="{}" target="_blank">Download CV</a>', obj.cv.url)
+        return "No file uploaded"
+    
+    view_cv.short_description = "CV"
+
+admin.site.register(JobApplication, JobApplicationAdmin)
 # admin.site.register(ContactForm)
 admin.site.register(News)
 admin.site.register(Login)

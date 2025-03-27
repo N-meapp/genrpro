@@ -1,5 +1,7 @@
 # from rest_framework.response import Response 
 from django.http import HttpResponse
+import mimetypes
+import os
 
 from django.contrib.auth import authenticate, login, logout 
 from django.conf import settings
@@ -7,6 +9,7 @@ from .models import *
 # from rest_framework.decorators import APIView
 # from rest_framework import status
 from .models import JobApplication
+from django.core.mail import EmailMessage
 
 import requests
 from .models import Count
@@ -137,42 +140,39 @@ def job_application_view(request):
         job_position = request.POST.get("job_position")
         resume = request.FILES.get("resume")  
 
-        if name and email and phone_number and job_position and resume:  
-            job = JobApplication(
+        if all([name, email, phone_number, job_position, resume]):  
+            job = JobApplication.objects.create(
                 name=name,
                 email=email,
                 phone_number=phone_number,
                 job_position=job_position,
                 cv=resume
             )
-            job.save()  # Saves the job application to the database (NO CHANGE TO BACKEND)
 
-            # Web3Forms Email Notification (Runs After Saving)
-            try:
-                web3forms_url = "https://api.web3forms.com/submit"
-                access_key = "7602f21f-477d-4668-8070-0b4e7ae9ae03"
+            # Email content
+            subject = "New Job Application Received"
+            message = f"""
+            Name: {name}
+            Email: {email}
+            Phone: {phone_number}
+            Position: {job_position}
+            """
 
-                data = {
-                    "access_key": access_key,
-                    "name": name,
-                    "email": email,
-                    "phone_number": phone_number,
-                    "job_position": job_position,
-                    "message": f"New Job Application:\n\nName: {name}\nEmail: {email}\nPhone: {phone_number}\nPosition: {job_position}"
-                }
+            mail = EmailMessage(
+                subject,
+                message,
+                from_email="info@genr.in",
+                to=["info@genr.in"],
+                reply_to=[email]
+            )
 
-                response = requests.post(web3forms_url, data=data)
-
-                if response.status_code == 200:
-                    print("Web3Forms email sent successfully.")
-                else:
-                    print("Failed to send email via Web3Forms.")
-            except Exception as e:
-                print(f"Error sending email: {e}")
+            # Attach the uploaded resume
+            mail.attach(resume.name, resume.read(), resume.content_type)
+            mail.send()
 
         return redirect("careers")  
 
-    return render(request, "careers.html")  # Show the application form
+    return render(request, "careers.html")
 
 def admin_dashboard(request):
     applications = JobApplication.objects.all()  # Get all job applications
@@ -379,14 +379,6 @@ def Enquiry_delete(request,id):
     if enquiry:
         enquiry.delete()
     return redirect('dashboard')
-
-
-
-
-
-
-
-
 
 
 

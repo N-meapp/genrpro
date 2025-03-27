@@ -137,10 +137,8 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # Collected static files
 
 
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-fieldDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -192,4 +190,12 @@ SESSION_COOKIE_AGE = 60 * 30  # 30 minutes session timeout (in seconds)
 # EMAIL_HOST_PASSWORD = 'Genr@321'  
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.hostinger.com"  # Replace with your webmail SMTP
+EMAIL_PORT = 587  # Use 465 if SSL is required
+EMAIL_USE_TLS = True  # Use EMAIL_USE_SSL = True for port 465
+EMAIL_HOST_USER = "info@genr.in"
+EMAIL_HOST_PASSWORD = "Genr@321"  # Use App Password if required
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
