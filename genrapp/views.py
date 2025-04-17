@@ -76,7 +76,7 @@ def about(request):
         msg = "Thanks for your review!"
 
     # Render the about page with the news, work_place, and msg context
-    return render(request, 'about.html', {'news': news, 'work_place': work_place, 'msg': msg})
+    return render(request, 'about.html', {'news': news, 'work_place': work_place, 'msg': msg,'offer_data': Offer.objects.all()})
 
 
 def Review_delete(request, id):
@@ -87,34 +87,34 @@ def Review_delete(request, id):
 
 
 def automation(request):
-    return render(request,'automation.html')
+    return render(request,'automation.html',{'offer_data': Offer.objects.all()})
 
 def cold_storage(request):
-    return render(request,'cold_storage.html')
+    return render(request,'cold_storage.html',{'offer_data': Offer.objects.all()})
 
 def contact(request):
-    return render(request,'contact.html')
+    return render(request,'contact.html',{'offer_data': Offer.objects.all()})
 
 def gallery(request):
-    return render(request,'gallery.html')
+    return render(request,'gallery.html',{'offer_data': Offer.objects.all()})
 
 def genrsmart(request):
-    return render(request,'Genrsmart.html')
+    return render(request,'Genrsmart.html',{'offer_data': Offer.objects.all()})
 
 def project(request):
-    return render(request,'project.html')
+    return render(request,'project.html',{'offer_data': Offer.objects.all()})
 
 
 
 def solar(request):
-    return render(request,'solar.html')
+    return render(request,'solar.html',{'offer_data': Offer.objects.all()})
 
 
 def workdetails(request):
-    return render(request,'workdetails.html')
+    return render(request,'workdetails.html',{'offer_data': Offer.objects.all()})
 
 def LoadCalc(request):
-    return render(request,'LoadCalc.html')
+    return render(request,'LoadCalc.html',{'offer_data': Offer.objects.all()})
 
 
 
@@ -127,7 +127,8 @@ def LoadCalc(request):
 def Careers(request):
    careerdata = Career.objects.all()
    context = {
-         'careerdata': careerdata
+         'careerdata': careerdata,
+         'offer_data': Offer.objects.all().distinct()
     }
    return render(request,'careers.html',context)
 
@@ -479,6 +480,7 @@ def gallery_page(request):
             'gallerycoldstorage': coldstoragegallery,
             'gallerygenrsmart': genramartgallery,
             'generatorgallery':generatorgallery,
+            'offer_data': Offer.objects.all()
         }
     return render(request, 'gallery.html', context)
     

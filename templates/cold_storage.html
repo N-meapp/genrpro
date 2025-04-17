@@ -98,7 +98,9 @@
           </div>
   
           <!-- Offers -->
-          <a href="{% url 'home' %}#offers" class="nav-item nav-link">Offers</a>
+          {% if offer_data %}
+            <a href="{% url 'home' %}#offers" class="nav-item nav-link">Offers</a>
+            {% endif %}
           <a href="{% url 'careers' %}" class="nav-item nav-link">Careers</a>
   
           <!-- Contact -->
